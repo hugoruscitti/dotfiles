@@ -41,6 +41,9 @@ call plug#begin('~/.vim/plugged')
   "Repetir en selecciones visuales
   Plug 'inkarkat/vim-visualrepeat'
 
+  "Permite maximizar o restaurar un panel
+  Plug 'szw/vim-maximizer'
+
 call plug#end()
 
 "Instalando extensiones para autocompletar código JavaScript y TypeScript.
@@ -56,6 +59,10 @@ set mouse=a
 set noswapfile
 set shiftwidth=2
 set expandtab
+set incsearch
+set tabstop=2
+set softtabstop=2
+set cindent
 
 "Activa la numeración de lineas
 set number
@@ -67,15 +74,8 @@ set nowrap
 "=================
 
 "Permite guardar con CMD+s
-map s :w<CR>
-imap s <ESC>:w<CR>i
-
-"Comentar usando CMD-/
-vmap / <Plug>NERDCommenterToggle
-nmap / <Plug>NERDCommenterToggle
-
-"Mostrar el arbol de archivos
-map \ :NERDTreeToggle<CR>
+noremap  <silent> <C-s> :w<CR>
+inoremap <silent> <C-s> <ESC>:w<CR>i
 
 
 "Permite navegar por tabs
@@ -87,13 +87,33 @@ noremap <D-5> :tabn 5<CR>
 noremap <D-6> :tabn 6<CR>
 
 "Permite saltar entre cambios
-nmap <D-k> :GitGutterPrevHunk<CR>
-nmap <D-j> :GitGutterNextHunk<CR>
+nmap <C-h> :GitGutterPrevHunk<CR>
+nmap <C-l> :GitGutterNextHunk<CR>
+
+"Moverse entre ventanas o paneles más rápido
+nmap <C-j> :wincmd j<CR>
+nmap <C-k> :wincmd k<CR>
 
 "Permite hacer búsquedas rápidas
-map p :GitFiles<CR>
-map m :GitFiles -m<CR>
-map o :Files<CR>
+map <C-p> :GitFiles<CR>
+map <C-m> :GitFiles -m<CR>
+map <C-o> :Files<CR>
+
+"Comentar usando CMD-/
+vmap <C-/> <Plug>NERDCommenterToggle
+nmap <C-/> <Plug>NERDCommenterToggle
+
+"Mostrar el arbol de archivos
+map <C-\> :NERDTreeToggle<CR>
+
+"Busqueda en el contenido de los archivos
+map <C-f> :Rg 
+
+"Activa el modo Goyo
+map <C-e> :Goyo<CR>
+
+"Alterna maximizado del panel
+map <C-a> :MaximizerToggle<CR>
 
 let g:onedark_color_overrides = {
 \ "black": {
@@ -109,3 +129,50 @@ colorscheme onedark
 set termguicolors
 
 
+"Configuración de COC
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+
+"Status line
+set laststatus=2
+
+set statusline=
+"set statusline+=%6*
+set statusline+=%t
+set statusline+=%=
+set statusline+=%f
+set statusline+=\ 
+set statusline+=%p
+set statusline+=﹪
+
+"hi User6 ctermbg=black ctermfg=darkgray guibg=black guifg=darkgray
+
+"Aplica coloreado de sintaxis cada vez que se guarda el archivo
+let g:semanticUseCache = 1
+let g:semanticPersistCache = 1
+autocmd BufEnter,BufWritePre *.py :SemanticHighlight
+autocmd BufEnter,BufWritePre *.js :SemanticHighlight
+autocmd BufEnter,BufWritePre *.ts :SemanticHighlight
