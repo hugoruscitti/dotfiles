@@ -86,9 +86,6 @@ noremap <D-4> :tabn 4<CR>
 noremap <D-5> :tabn 5<CR>
 noremap <D-6> :tabn 6<CR>
 
-"Permite saltar entre cambios
-nmap <C-h> :GitGutterPrevHunk<CR>
-nmap <C-l> :GitGutterNextHunk<CR>
 
 "Moverse entre ventanas o paneles más rápido
 nmap <C-j> :wincmd j<CR>
@@ -106,14 +103,19 @@ nmap <C-/> <Plug>NERDCommenterToggle
 "Mostrar el arbol de archivos
 map <C-\> :NERDTreeToggle<CR>
 
-"Busqueda en el contenido de los archivos
-map <C-f> :Rg 
+"Alterna maximizado del panel
+map <C-a> :MaximizerToggle<CR>
 
 "Activa el modo Goyo
 map <C-e> :Goyo<CR>
 
-"Alterna maximizado del panel
-map <C-a> :MaximizerToggle<CR>
+"Busqueda en el contenido de los archivos
+map <C-f> :Rg 
+
+"Permite saltar entre cambios
+nmap <C-h> :GitGutterPrevHunk<CR>
+nmap <C-l> :GitGutterNextHunk<CR>
+
 
 let g:onedark_color_overrides = {
 \ "black": {
