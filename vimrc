@@ -1,22 +1,40 @@
 "Activa opciones básicas
 set nocompatible
 set noswapfile
+"syntax on
 
 "Permite editar el archivo .vimrc pulsando ,m
-map ,m :e ~/.vimrc<CR> 
+map ,m :e ~/.vimrc<CR>
 
 "Se asegura de actualizar vimrc ante cada cambio
 au! BufWritePost .vimrc so %
+
+"Define a fish como el shell predeterminado
+set shell=/usr/local/bin/fish
+
+let g:vim_npr_file_types = ["js", "jsx", "css", "coffee", "vue", "ts"]
 
 call plug#begin('~/.vim/plugged')
 
   Plug 'joshdick/onedark.vim'
 
+  "Permite abrir los archivos más recientes
+  Plug 'pbogut/fzf-mru.vim'
+
   "Permite comentar bloques
   Plug 'preservim/nerdcommenter'
 
+  "Permite cambiar caracteres que 'encierran' un texto.
+  Plug 'tpope/vim-surround'
+
   "Modo no distracción, se activa con :Goyo
   Plug 'junegunn/goyo.vim'
+
+  "Añade resaltado de las palabras en las que está el cursor.
+  Plug 'RRethy/vim-illuminate'
+
+  "Permite extender la funcionalidad de %
+  Plug 'adelarsq/vim-matchit'
 
   "Fuzzy finder
   Plug 'junegunn/fzf'
@@ -26,14 +44,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
 
-  "Coloreado de sintaxis semántico
-  Plug 'jaxbot/semantic-highlight.vim'
-
   "Autocompletado
   Plug 'neoclide/coc.nvim'
 
   "Navegador de archivos
   Plug 'preservim/nerdtree'
+  Plug 'flw-cn/vim-nerdtree-l-open-h-close'
+
+  "Mejoras para editar archivos .vue
+  Plug 'leafOfTree/vim-vue-plugin'
 
   "Ember
   Plug 'joukevandermaas/vim-ember-hbs'
@@ -44,10 +63,16 @@ call plug#begin('~/.vim/plugged')
   "Permite maximizar o restaurar un panel
   Plug 'szw/vim-maximizer'
 
+  "Mejora el plegado de código.
+  Plug 'pseewald/vim-anyfold'
+
 call plug#end()
 
 "Instalando extensiones para autocompletar código JavaScript y TypeScript.
 let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-python']
+
+"Activando coloreado de sintaxis dentro de vue
+let g:vim_vue_plugin_use_typescript = 1
 
 "Solo actualiza las lineas modificadas en git cuando guarda un archivo
 autocmd BufWritePost * GitGutter
@@ -70,41 +95,34 @@ set number
 "Desactiva el ajuste de lineas
 set nowrap
 
+"Mejoras en el plegado de código
+autocmd Filetype * AnyFoldActivate
+let g:anyfold_fold_comments=1
+set foldlevel=99
+
+
 "ATAJOS DE TECLADO
 "=================
 
-"Permite guardar con CMD+s
-noremap  <silent> <C-s> :w<CR>
-inoremap <silent> <C-s> <ESC>:w<CR>i
+"Alternar archivos
+map <silent> <C-u> :e#<CR>
+
+"Guarda el buffer cuando deja de estar visible
+set autowriteall
+set autowrite
 
 
-"Permite navegar por tabs
-noremap <D-1> :tabn 1<CR>
-noremap <D-2> :tabn 2<CR>
-noremap <D-3> :tabn 3<CR>
-noremap <D-4> :tabn 4<CR>
-noremap <D-5> :tabn 5<CR>
-noremap <D-6> :tabn 6<CR>
-
-
-"Moverse entre ventanas o paneles más rápido
-nmap <C-j> :wincmd j<CR>
-nmap <C-k> :wincmd k<CR>
-
-"Permite hacer búsquedas rápidas
-map <C-p> :GitFiles<CR>
-map <C-m> :GitFiles -m<CR>
-map <C-o> :Files<CR>
-
-"Comentar usando CMD-/
-vmap <C-/> <Plug>NERDCommenterToggle
-nmap <C-/> <Plug>NERDCommenterToggle
+"Comentar usando CMD
+vmap / <Plug>NERDCommenterToggle
+nmap / <Plug>NERDCommenterToggle
 
 "Mostrar el arbol de archivos
-map <C-\> :NERDTreeToggle<CR>
+map \ :NERDTreeToggle<CR>
 
 "Alterna maximizado del panel
 map <C-a> :MaximizerToggle<CR>
+
+"vmap <C-c> "+y
 
 "Activa el modo Goyo
 map <C-e> :Goyo<CR>
@@ -112,23 +130,45 @@ map <C-e> :Goyo<CR>
 "Busqueda en el contenido de los archivos
 map <C-f> :Rg 
 
+"Permite guardar con CMD+s
+noremap  <silent> <C-s> :w<CR>
+inoremap <silent> <C-s> <ESC>:w<CR>l
+
+
 "Permite saltar entre cambios
 nmap <C-h> :GitGutterPrevHunk<CR>
-nmap <C-l> :GitGutterNextHunk<CR>
 
+"Moverse entre ventanas o paneles más rápido
+nnoremap <C-j> <c-d>
+nnoremap <C-k> <c-u>
 
+"Permite saltar entre cambios
+nmap <silent> <C-l> :GitGutterNextHunk<CR>
+
+"Permite hacer búsquedas rápidas
+map <silent> <C-p> :GFiles --exclude-standard --others --cached<CR>
+map <silent> <C-b> :GitFiles -m<CR>
+map <silent> <C-m> :FZFMru<CR>
+map <silent> <C-o> :Files<CR>
+
+"Permite abrir gitup
+map <silent> . :!gitup<CR>
+
+"Oscurece el color de fondo del editor
 let g:onedark_color_overrides = {
 \ "black": {
-\      "gui": "#16191d", 
+\      "gui": "#16191d",
 \      "cterm": "235", 
 \      "cterm16": "0"
 \ }
 \}
 
-
 "Define el tema de colores
 colorscheme onedark
 set termguicolors
+
+"Demora el resalatado de palabras idénticas
+let g:Illuminate_delay = 2000
 
 
 "Configuración de COC
@@ -140,6 +180,8 @@ set updatetime=300
 set shortmess+=c
 set signcolumn=yes
 
+
+"Permite autocompletar solamente cuando se pulsa la tecla TAB
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -161,20 +203,27 @@ endif
 "Status line
 set laststatus=2
 
+"Define qué mostrar en la parte inferior de la pantalla.
 set statusline=
-"set statusline+=%6*
 set statusline+=%t
-set statusline+=%=
-set statusline+=%f
 set statusline+=\ 
+set statusline+=%1*
+set statusline+=%{&modified?\"[+]\":\"\"}
+set statusline+=%=
+set statusline+=\ 
+set statusline+=%2*
 set statusline+=%p
 set statusline+=﹪
+set statusline+=%h
 
-"hi User6 ctermbg=black ctermfg=darkgray guibg=black guifg=darkgray
 
-"Aplica coloreado de sintaxis cada vez que se guarda el archivo
-let g:semanticUseCache = 1
-let g:semanticPersistCache = 1
-autocmd BufEnter,BufWritePre *.py :SemanticHighlight
-autocmd BufEnter,BufWritePre *.js :SemanticHighlight
-autocmd BufEnter,BufWritePre *.ts :SemanticHighlight
+hi User1 guibg=#2A323B guifg=orange
+hi User2 guibg=#2A323B guifg=white
+
+"Define los colores de fondo para el status activo e inactivos.
+hi StatusLine guibg=#2A323B guifg=white
+
+hi StatusLineNC guibg=#2A323B guifg=darkgray
+
+set visualbell t_vb=
+set novisualbell
