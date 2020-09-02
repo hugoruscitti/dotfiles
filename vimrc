@@ -12,11 +12,17 @@ au! BufWritePost .vimrc so %
 "Define a fish como el shell predeterminado
 set shell=/usr/local/bin/fish
 
+"Permite pulsar "gf" en lineas tipo import X from 'FILE' de node para abrir
+"archivos.
 let g:vim_npr_file_types = ["js", "jsx", "css", "coffee", "vue", "ts"]
 
 call plug#begin('~/.vim/plugged')
 
+  "Tema
   Plug 'joshdick/onedark.vim'
+
+  "Snippets que se activa con TAB
+  Plug 'SirVer/ultisnips'
 
   "Permite abrir los archivos más recientes
   Plug 'pbogut/fzf-mru.vim'
@@ -26,6 +32,11 @@ call plug#begin('~/.vim/plugged')
 
   "Permite cambiar caracteres que 'encierran' un texto.
   Plug 'tpope/vim-surround'
+
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+  "Svelte
+  Plug 'evanleck/vim-svelte', {'branch': 'main'}
 
   "Modo no distracción, se activa con :Goyo
   Plug 'junegunn/goyo.vim'
@@ -48,8 +59,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'neoclide/coc.nvim'
 
   "Navegador de archivos
-  Plug 'preservim/nerdtree'
-  Plug 'flw-cn/vim-nerdtree-l-open-h-close'
+  Plug 'lambdalisue/fern.vim'
 
   "Mejoras para editar archivos .vue
   Plug 'leafOfTree/vim-vue-plugin'
@@ -68,8 +78,11 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+"Permite que UltSnips no conflictúe con COC
+let g:UltiSnipsExpandTrigger = "<nop>"
+
 "Instalando extensiones para autocompletar código JavaScript y TypeScript.
-let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-python']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-ultisnips', 'coc-json', 'coc-python']
 
 "Activando coloreado de sintaxis dentro de vue
 let g:vim_vue_plugin_use_typescript = 1
@@ -89,6 +102,21 @@ set tabstop=2
 set softtabstop=2
 set cindent
 
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {},
+    \ 'content_editable': v:false
+    \ }
+
+let g:mkdp_refresh_slow = 1
+
 "Activa la numeración de lineas
 set number
 
@@ -100,7 +128,6 @@ autocmd Filetype * AnyFoldActivate
 let g:anyfold_fold_comments=1
 set foldlevel=99
 
-
 "ATAJOS DE TECLADO
 "=================
 
@@ -111,13 +138,12 @@ map <silent> <C-u> :e#<CR>
 set autowriteall
 set autowrite
 
-
 "Comentar usando CMD
 vmap / <Plug>NERDCommenterToggle
 nmap / <Plug>NERDCommenterToggle
 
 "Mostrar el arbol de archivos
-map \ :NERDTreeToggle<CR>
+map <silent> \ :Fern . -reveal=% -drawer -toggle<CR>
 
 "Alterna maximizado del panel
 map <C-a> :MaximizerToggle<CR>
@@ -125,7 +151,7 @@ map <C-a> :MaximizerToggle<CR>
 "vmap <C-c> "+y
 
 "Activa el modo Goyo
-map <C-e> :Goyo<CR>
+"map <C-e> :Goyo<CR>
 
 "Busqueda en el contenido de los archivos
 map <C-f> :Rg 
@@ -133,7 +159,6 @@ map <C-f> :Rg
 "Permite guardar con CMD+s
 noremap  <silent> <C-s> :w<CR>
 inoremap <silent> <C-s> <ESC>:w<CR>l
-
 
 "Permite saltar entre cambios
 nmap <C-h> :GitGutterPrevHunk<CR>
@@ -170,7 +195,6 @@ set termguicolors
 "Demora el resalatado de palabras idénticas
 let g:Illuminate_delay = 2000
 
-
 "Configuración de COC
 set hidden
 set nobackup
@@ -179,7 +203,6 @@ set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
-
 
 "Permite autocompletar solamente cuando se pulsa la tecla TAB
 inoremap <silent><expr> <TAB>
@@ -199,7 +222,6 @@ else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
-
 "Status line
 set laststatus=2
 
@@ -216,7 +238,6 @@ set statusline+=%p
 set statusline+=﹪
 set statusline+=%h
 
-
 hi User1 guibg=#2A323B guifg=orange
 hi User2 guibg=#2A323B guifg=white
 
@@ -227,3 +248,7 @@ hi StatusLineNC guibg=#2A323B guifg=darkgray
 
 set visualbell t_vb=
 set novisualbell
+
+"Evitando el delay que genera combinaciones tipo C- cuando se pulsa
+"ESC seguido de una tecla como /
+set timeout timeoutlen=100 ttimeoutlen=10
