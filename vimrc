@@ -1,127 +1,90 @@
 "Activa opciones básicas
+set backspace=2
+set cindent
+set expandtab
+set incsearch
+set mouse=a
 set nocompatible
 set noswapfile
-"syntax on
+set nowrap
+set number
+set autowriteall
+set autowrite
+set relativenumber
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set wildmenu
+
+filetype plugin indent on
+
+"Atajos de teclado
+let mapleader = '<SPACE>'
+set timeoutlen=1500
 
 "Permite editar el archivo .vimrc pulsando ,m
 map ,m :e ~/.vimrc<CR>
 
-"Se asegura de actualizar vimrc ante cada cambio
-au! BufWritePost .vimrc so %
 
 "Define a fish como el shell predeterminado
 set shell=/usr/local/bin/fish
 
 "Permite pulsar "gf" en lineas tipo import X from 'FILE' de node para abrir
 "archivos.
-let g:vim_npr_file_types = ["js", "jsx", "css", "coffee", "vue", "ts"]
+let g:vim_npr_file_types = ["js", "jsx", "css", "coffee", "ts"]
 
+" Plugins
 call plug#begin('~/.vim/plugged')
 
-  "Tema
-  Plug 'joshdick/onedark.vim'
+  Plug 'joshdick/onedark.vim'              "Tema
+  Plug 'liuchengxu/vim-which-key'          "Muestras los atajos personalizados
+  Plug 'AndrewRadev/splitjoin.vim'         "Permite unir o separar bloques en varias lineas.
+  Plug 'SirVer/ultisnips'                  "Snippets que se activa con TAB
+  Plug 'dag/vim-fish'                      "Resaltado de sintaxis para scripts de fish
+  Plug 'pechorin/any-jump.vim'             "NUEVO:
+  Plug 'dyng/ctrlsf.vim'                   "NUEVO: Busqueda en todo el proyecto por palabras
+  Plug 'preservim/nerdcommenter'           "Permite comentar bloques.
+  Plug 'tpope/vim-surround'                "Permite cambiar caracteres que 'encierran' un texto.
 
-  "Snippets que se activa con TAB
-  Plug 'SirVer/ultisnips'
+  Plug 'evanleck/vim-svelte', {'branch': 'main'} "Svelte
 
-  "Permite abrir los archivos más recientes
-  Plug 'pbogut/fzf-mru.vim'
+  Plug 'RRethy/vim-illuminate'             "Añade resaltado de las palabras en las que está el cursor.
+  Plug 'adelarsq/vim-matchit'              "Permite extender la funcionalidad de %
+  Plug 'junegunn/fzf'                      "Fuzzy finder.
+  Plug 'junegunn/fzf.vim'                  "Fuzzy finder.
 
-  "Permite comentar bloques
-  Plug 'preservim/nerdcommenter'
-
-  "Permite cambiar caracteres que 'encierran' un texto.
-  Plug 'tpope/vim-surround'
-
-  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
-  "Svelte
-  Plug 'evanleck/vim-svelte', {'branch': 'main'}
-
-  "Modo no distracción, se activa con :Goyo
-  Plug 'junegunn/goyo.vim'
-
-  "Añade resaltado de las palabras en las que está el cursor.
-  Plug 'RRethy/vim-illuminate'
-
-  "Permite extender la funcionalidad de %
-  Plug 'adelarsq/vim-matchit'
-
-  "Fuzzy finder
-  Plug 'junegunn/fzf'
-  Plug 'junegunn/fzf.vim'
-
-  "Señala las lineas modificadas y agrega soporte para git
-  Plug 'airblade/vim-gitgutter'
-  Plug 'tpope/vim-fugitive'
-
-  "Autocompletado
-  Plug 'neoclide/coc.nvim'
-
-  "Navegador de archivos
-  Plug 'lambdalisue/fern.vim'
-
-  "Mejoras para editar archivos .vue
-  Plug 'leafOfTree/vim-vue-plugin'
-
-  "Ember
-  Plug 'joukevandermaas/vim-ember-hbs'
-
-  "Repetir en selecciones visuales
-  Plug 'inkarkat/vim-visualrepeat'
-
-  "Permite maximizar o restaurar un panel
-  Plug 'szw/vim-maximizer'
-
-  "Mejora el plegado de código.
-  Plug 'pseewald/vim-anyfold'
+  Plug 'airblade/vim-gitgutter'            "Señala las lineas modificadas.
+  Plug 'tpope/vim-fugitive'                "Agrega soporte para git.
+  Plug 'neoclide/coc.nvim'                 "Autocompletado
+  Plug 'lambdalisue/fern.vim'              "Navegador de archivos
+  Plug 'lambdalisue/fern-git-status.vim'   "Señala el estado de los archivos en git
+  Plug 'joukevandermaas/vim-ember-hbs'     "Ember
+  Plug 'inkarkat/vim-visualrepeat'         "Repetir en selecciones visuales
+  Plug 'szw/vim-maximizer'                 "Permite maximizar o restaurar un panel
+  Plug 'pseewald/vim-anyfold'              "Mejora el plegado de código.
 
 call plug#end()
+
 
 "Permite que UltSnips no conflictúe con COC
 let g:UltiSnipsExpandTrigger = "<nop>"
 
 "Instalando extensiones para autocompletar código JavaScript y TypeScript.
-let g:coc_global_extensions = ['coc-tsserver', 'coc-ultisnips', 'coc-json', 'coc-python']
-
-"Activando coloreado de sintaxis dentro de vue
-let g:vim_vue_plugin_use_typescript = 1
+let g:coc_global_extensions = [
+  \ 'coc-tsserver', 
+  \ 'coc-ultisnips', 
+  \ 'coc-json', 
+  \ 'coc-python', 
+  \ 'coc-svelte', 
+  \ 'coc-eslint', 
+  \ 'coc-prettier'
+  \ ]
 
 "Solo actualiza las lineas modificadas en git cuando guarda un archivo
 autocmd BufWritePost * GitGutter
 
-"Configuración general
-set backspace=2
-set wildmenu
-set mouse=a
-set noswapfile
-set shiftwidth=2
-set expandtab
-set incsearch
-set tabstop=2
-set softtabstop=2
-set cindent
-
-let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {},
-    \ 'flowchart_diagrams': {},
-    \ 'content_editable': v:false
-    \ }
-
-let g:mkdp_refresh_slow = 1
-
-"Activa la numeración de lineas
-set number
-
-"Desactiva el ajuste de lineas
-set nowrap
+"Se asegura de actualizar vimrc ante cada cambio
+au! BufWritePost .vimrc so %
 
 "Mejoras en el plegado de código
 autocmd Filetype * AnyFoldActivate
@@ -132,59 +95,55 @@ set foldlevel=99
 "=================
 
 "Alternar archivos
-map <silent> <C-u> :e#<CR>
-
-"Guarda el buffer cuando deja de estar visible
-set autowriteall
-set autowrite
+map <silent> <c-u> :e#<CR>
 
 "Comentar usando CMD
-vmap / <Plug>NERDCommenterToggle
-nmap / <Plug>NERDCommenterToggle
+vmap <leader>/ <Plug>NERDCommenterToggle
+nmap <leader>/ <Plug>NERDCommenterToggle
 
 "Mostrar el arbol de archivos
-map <silent> \ :Fern . -reveal=% -drawer -toggle<CR>
+map <silent> <leader>\ :Fern . -reveal=% -drawer -toggle<CR>
+
+"Permite desplazarse más rápido
+nnoremap <C-j> <c-d>
+nnoremap <C-k> <c-u>
 
 "Alterna maximizado del panel
 map <C-a> :MaximizerToggle<CR>
 
-"vmap <C-c> "+y
-
-"Activa el modo Goyo
-"map <C-e> :Goyo<CR>
+"Muestra la ayuda de atajos
+map <silent> <leader>h :WhichKey 'f'<cr>
 
 "Busqueda en el contenido de los archivos
-map <C-f> :Rg 
+map <leader>f :Rg 
+map <leader>e :Rg <C-R><C-W><CR>
 
 "Permite guardar con CMD+s
-noremap  <silent> <C-s> :w<CR>
+noremap  <C-s> :w<CR>
 inoremap <silent> <C-s> <ESC>:w<CR>l
 
 "Permite saltar entre cambios
-nmap <C-h> :GitGutterPrevHunk<CR>
-
-"Moverse entre ventanas o paneles más rápido
-nnoremap <C-j> <c-d>
-nnoremap <C-k> <c-u>
+nmap <c-h> :GitGutterPrevHunk<CR>
 
 "Permite saltar entre cambios
-nmap <silent> <C-l> :GitGutterNextHunk<CR>
+nmap <c-l> :GitGutterNextHunk<CR>
 
 "Permite hacer búsquedas rápidas
-map <silent> <C-p> :GFiles --exclude-standard --others --cached<CR>
-map <silent> <C-b> :GitFiles -m<CR>
-map <silent> <C-m> :FZFMru<CR>
-map <silent> <C-o> :Files<CR>
+map <silent> <leader>p :GFiles --exclude-standard --others --cached<CR>
+map <silent> <leader>b :GitFiles -m<CR>
+map <silent> <leader>m :GitFiles?<CR>
+map <silent> <leader>o :Files<CR>
 
-"Permite abrir gitup
-map <silent> . :!gitup<CR>
+
+"Abre gitui
+map <silent> <leader>g :!gitui<CR>
 
 "Oscurece el color de fondo del editor
 let g:onedark_color_overrides = {
 \ "black": {
 \      "gui": "#16191d",
-\      "cterm": "235", 
-\      "cterm16": "0"
+\      "cterm": "1235", 
+\      "cterm16": "20"
 \ }
 \}
 
@@ -199,35 +158,21 @@ let g:Illuminate_delay = 2000
 set hidden
 set nobackup
 set nowritebackup
-set cmdheight=2
+set cmdheight=2        " necesita ser 2 para mostrar errores
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
-
-"Permite autocompletar solamente cuando se pulsa la tecla TAB
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-
-"Status line
 set laststatus=2
+
+
+"Abreviaturas
+iab ipdb import ipdb; ipdb.set_trace()
+
+
 
 "Define qué mostrar en la parte inferior de la pantalla.
 set statusline=
-set statusline+=%t
+set statusline+=%f
 set statusline+=\ 
 set statusline+=%1*
 set statusline+=%{&modified?\"[+]\":\"\"}
@@ -249,6 +194,70 @@ hi StatusLineNC guibg=#2A323B guifg=darkgray
 set visualbell t_vb=
 set novisualbell
 
-"Evitando el delay que genera combinaciones tipo C- cuando se pulsa
-"ESC seguido de una tecla como /
-set timeout timeoutlen=100 ttimeoutlen=10
+"Mejoras en los símbolos del arbol de archivos
+let g:fern#mark_symbol = '●'
+let g:fern#renderer#default#collapsed_symbol = '▷ '
+let g:fern#renderer#default#expanded_symbol = '▼ '
+let g:fern#renderer#default#leading = ' '
+let g:fern#renderer#default#leaf_symbol = ' '
+let g:fern#renderer#default#root_symbol = '~ '
+
+"Preferencias para mostrar el status de git.
+let g:fern_git_status#disable_ignored = 1
+let g:fern_git_status#disable_untracked = 1
+let g:fern_git_status#disable_submodules = 1
+
+let $FZF_DEFAULT_OPTS .= ' --no-info'
+let g:asyncomplete_auto_popup = 0
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ asyncomplete#force_refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+"Opciones de refactorización
+xnoremap <leader>r v<Plug>(coc-codeaction-selected) 
+nmap <leader>r v<Plug>(coc-codeaction-selected)
+
+function! s:gitModified()
+    let files = systemlist('git ls-files -m 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore
+function! s:gitUntracked()
+    let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+"Oculta la previsualización en FZF aunque permite habilitarla con ctrl-/
+let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
