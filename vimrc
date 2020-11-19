@@ -19,7 +19,7 @@ set wildmenu
 filetype plugin indent on
 
 "Atajos de teclado
-let mapleader = '<SPACE>'
+let mapleader = ' '
 set timeoutlen=1500
 
 "Permite editar el archivo .vimrc pulsando ,m
@@ -36,6 +36,7 @@ let g:vim_npr_file_types = ["js", "jsx", "css", "coffee", "ts"]
 " Plugins
 call plug#begin('~/.vim/plugged')
 
+  Plug 'leafgarland/typescript-vim'        "Soporte para typescript
   Plug 'joshdick/onedark.vim'              "Tema
   Plug 'liuchengxu/vim-which-key'          "Muestras los atajos personalizados
   Plug 'AndrewRadev/splitjoin.vim'         "Permite unir o separar bloques en varias lineas.
@@ -45,6 +46,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'dyng/ctrlsf.vim'                   "NUEVO: Busqueda en todo el proyecto por palabras
   Plug 'preservim/nerdcommenter'           "Permite comentar bloques.
   Plug 'tpope/vim-surround'                "Permite cambiar caracteres que 'encierran' un texto.
+
+  Plug 'valloric/MatchTagAlways'           "Hace que se resalten los tags html
 
   Plug 'evanleck/vim-svelte', {'branch': 'main'} "Svelte
 
@@ -102,11 +105,17 @@ vmap <leader>/ <Plug>NERDCommenterToggle
 nmap <leader>/ <Plug>NERDCommenterToggle
 
 "Mostrar el arbol de archivos
-map <silent> <leader>\ :Fern . -reveal=% -drawer -toggle<CR>
+map <silent> <leader>\ :Fern . -reveal=% -drawer -toggle -width=50<CR>
 
 "Permite desplazarse más rápido
 nnoremap <C-j> <c-d>
 nnoremap <C-k> <c-u>
+
+"Plegado de código
+map <leader>1 :set foldlevel=0<CR>
+map <leader>2 :set foldlevel=1<CR>
+map <leader>3 :set foldlevel=2<CR>
+map <leader>4 :set foldlevel=999<CR>
 
 "Alterna maximizado del panel
 map <C-a> :MaximizerToggle<CR>
@@ -116,6 +125,7 @@ map <silent> <leader>h :WhichKey 'f'<cr>
 
 "Busqueda en el contenido de los archivos
 map <leader>f :Rg 
+map <leader>F :CtrlSF<CR>
 map <leader>e :Rg <C-R><C-W><CR>
 
 "Permite guardar con CMD+s
@@ -141,11 +151,19 @@ map <silent> <leader>g :!gitui<CR>
 "Oscurece el color de fondo del editor
 let g:onedark_color_overrides = {
 \ "black": {
-\      "gui": "#16191d",
+\      "gui": "#12121B",
 \      "cterm": "1235", 
 \      "cterm16": "20"
 \ }
 \}
+
+"let g:onedark_color_overrides = {
+"\ "black": {
+"\      "gui": "#16191d",
+"\      "cterm": "1235", 
+"\      "cterm16": "20"
+"\ }
+"\}
 
 "Define el tema de colores
 colorscheme onedark
@@ -167,19 +185,29 @@ set laststatus=2
 
 "Abreviaturas
 iab ipdb import ipdb; ipdb.set_trace()
+iab debugger debugger; // eslint-disable-line
 
+
+"Atajos de refactorización y navegación
+xmap <leader>r  <Plug>(coc-codeaction-selected)
+nmap <leader>r  <Plug>(coc-codeaction-selected)
+nmap <leader>R  <Plug>(coc-codeaction)
+
+nmap <leader>d <Plug>(coc-definition)
+nmap <leader>i <Plug>(coc-implementation)
+"nmap <leader>e <Plug>(coc-references)
 
 
 "Define qué mostrar en la parte inferior de la pantalla.
 set statusline=
 set statusline+=%f
 set statusline+=\ 
-set statusline+=%1*
-set statusline+=%{&modified?\"[+]\":\"\"}
-set statusline+=%=
-set statusline+=\ 
-set statusline+=%2*
-set statusline+=%p
+set statusline+=%1*                            " Color naranja
+set statusline+=%{&modified?\"[+]\":\"\"}      " Marca de modificación
+set statusline+=%=                             " Separador
+set statusline+=%2*                            " Color blanco
+set statusline+=[%l:%v]\                       " Indicador de linea y columna
+set statusline+=%p                             " Porcentaje de scroll
 set statusline+=﹪
 set statusline+=%h
 
@@ -195,11 +223,10 @@ set visualbell t_vb=
 set novisualbell
 
 "Mejoras en los símbolos del arbol de archivos
-let g:fern#mark_symbol = '●'
-let g:fern#renderer#default#collapsed_symbol = '▷ '
-let g:fern#renderer#default#expanded_symbol = '▼ '
-let g:fern#renderer#default#leading = ' '
-let g:fern#renderer#default#leaf_symbol = ' '
+let g:fern#renderer#default#collapsed_symbol = '+ '
+let g:fern#renderer#default#expanded_symbol = '- '
+let g:fern#renderer#default#leading          = ' '
+let g:fern#renderer#default#leaf_symbol      = '  '
 let g:fern#renderer#default#root_symbol = '~ '
 
 "Preferencias para mostrar el status de git.
@@ -243,10 +270,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-"Opciones de refactorización
-xnoremap <leader>r v<Plug>(coc-codeaction-selected) 
-nmap <leader>r v<Plug>(coc-codeaction-selected)
 
 function! s:gitModified()
     let files = systemlist('git ls-files -m 2>/dev/null')
