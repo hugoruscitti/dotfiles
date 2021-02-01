@@ -1,0 +1,60 @@
+#!/usr/local/bin/python3
+
+import os
+import sys
+
+DIRECTORIO_LINKS = "/Users/hugoruscitti/proyectos/examplelab/content/links-files/"
+ARCHIVO_LINKS = "/Users/hugoruscitti/proyectos/examplelab/content/links.md"
+
+def extraer_titulo(archivo_html):
+    with open(archivo_html, 'r') as file:
+        for line in file:
+            for item in line.split('<title>'):
+                if '</title>' in item:
+                    return str.strip(item.split('</title>')[0])
+
+    return "Sin titulo"
+
+def agregar_link(ARCHIVO_LINKS, link_markdown):
+    with open(ARCHIVO_LINKS, "a") as archivo:
+        archivo.write(link_markdown)
+
+def obtener_nombre_de_archivo(url):
+    return os.path.splitext(os.path.basename(url))[0]
+
+def main():
+
+    if len(sys.argv) != 2:
+        print("Debes indicar la url del artículo")
+        sys.exit(1)
+
+    url = sys.argv[1]
+
+    # Descarga el archivo html
+    print("Descargando ...")
+    os.system(f"wget '{url}' -O tmp.html -q")
+
+    # Extrae metadata
+    titulo = extraer_titulo("tmp.html")
+    archivo = obtener_nombre_de_archivo(url)
+    link_markdown = f"- [{titulo}](/links-files/{archivo})"
+
+    # Convierte a markdown
+    os.system(f"pandoc tmp.html -o tmp.md -t markdown_strict --wrap=auto")
+
+    # Agrega metadata al archivo markdown
+    print(link_markdown)
+
+    # Mueve el archivo al archivo de artículos
+    destino = f"{DIRECTORIO_LINKS}/{archivo}.md"
+    os.system(f"mv tmp.md {destino}")
+
+    # Agrega el artículo al índice
+    agregar_link(ARCHIVO_LINKS, link_markdown)
+
+    print(f"Editando archivo links: {ARCHIVO_LINKS}")
+    print(f"Creando el archivo: {destino}")
+
+    
+if __name__ == "__main__":
+    main()
