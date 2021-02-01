@@ -1,20 +1,26 @@
-"Activa opciones básicas
+"Opciones básicas
+set autoindent
+set autoread
+set autowrite
+set autowriteall
 set backspace=2
 set cindent
 set expandtab
 set incsearch
-set mouse=a
+set mouse=
 set nocompatible
 set noswapfile
 set nowrap
 set number
-set autowriteall
-set autowrite
+set re=0
 set relativenumber
 set shiftwidth=2
+set smartindent
 set softtabstop=2
 set tabstop=2
+set tabstop=2
 set wildmenu
+set laststatus=2
 
 filetype plugin indent on
 
@@ -25,63 +31,124 @@ set timeoutlen=1500
 "Permite editar el archivo .vimrc pulsando ,m
 map ,m :e ~/.vimrc<CR>
 
+"Haciendo que ESC sea inmediato
+set timeoutlen=1000 ttimeoutlen=0
 
 "Define a fish como el shell predeterminado
 set shell=/usr/local/bin/fish
 
-"Permite pulsar "gf" en lineas tipo import X from 'FILE' de node para abrir
-"archivos.
+"Permite pulsar "gf" en lineas tipo import X from 'FILE'
 let g:vim_npr_file_types = ["js", "jsx", "css", "coffee", "ts"]
+
+"Colorea todos los strings que parecen html
+let g:htl_all_templates = 1
+
+let g:ale_completion_enabled = 0
 
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-  Plug 'leafgarland/typescript-vim'        "Soporte para typescript
-  Plug 'joshdick/onedark.vim'              "Tema
-  Plug 'liuchengxu/vim-which-key'          "Muestras los atajos personalizados
-  Plug 'AndrewRadev/splitjoin.vim'         "Permite unir o separar bloques en varias lineas.
-  Plug 'SirVer/ultisnips'                  "Snippets que se activa con TAB
-  Plug 'dag/vim-fish'                      "Resaltado de sintaxis para scripts de fish
-  Plug 'pechorin/any-jump.vim'             "NUEVO:
-  Plug 'dyng/ctrlsf.vim'                   "NUEVO: Busqueda en todo el proyecto por palabras
-  Plug 'preservim/nerdcommenter'           "Permite comentar bloques.
-  Plug 'tpope/vim-surround'                "Permite cambiar caracteres que 'encierran' un texto.
+  "Soporte para typescript
+  Plug 'leafgarland/typescript-vim'
 
-  Plug 'valloric/MatchTagAlways'           "Hace que se resalten los tags html
+  "Temas
+  Plug 'joshdick/onedark.vim'
+  Plug 'arzg/vim-colors-xcode'
 
-  Plug 'evanleck/vim-svelte', {'branch': 'main'} "Svelte
+  "Muestras los atajos personalizados
+  Plug 'liuchengxu/vim-which-key'
 
-  Plug 'RRethy/vim-illuminate'             "Añade resaltado de las palabras en las que está el cursor.
-  Plug 'adelarsq/vim-matchit'              "Permite extender la funcionalidad de %
-  Plug 'junegunn/fzf'                      "Fuzzy finder.
-  Plug 'junegunn/fzf.vim'                  "Fuzzy finder.
+  "Permite unir o separar bloques en varias lineas.
+  Plug 'AndrewRadev/splitjoin.vim' 
 
-  Plug 'airblade/vim-gitgutter'            "Señala las lineas modificadas.
-  Plug 'tpope/vim-fugitive'                "Agrega soporte para git.
-  Plug 'neoclide/coc.nvim'                 "Autocompletado
-  Plug 'lambdalisue/fern.vim'              "Navegador de archivos
-  Plug 'lambdalisue/fern-git-status.vim'   "Señala el estado de los archivos en git
-  Plug 'joukevandermaas/vim-ember-hbs'     "Ember
-  Plug 'inkarkat/vim-visualrepeat'         "Repetir en selecciones visuales
-  Plug 'szw/vim-maximizer'                 "Permite maximizar o restaurar un panel
-  Plug 'pseewald/vim-anyfold'              "Mejora el plegado de código.
+  "Colores en css
+  Plug 'ap/vim-css-color'
+
+  "Snippets que se activa con TAB
+  Plug 'SirVer/ultisnips'
+
+  "Resaltado de sintaxis para scripts de fish
+  Plug 'dag/vim-fish'
+
+  "Busca símbolos rápidamente
+  Plug 'pechorin/any-jump.vim' 
+
+  "Busqueda en todo el proyecto por palabras
+  Plug 'dyng/ctrlsf.vim' 
+
+  "Permite comentar bloques.
+  Plug 'preservim/nerdcommenter' 
+
+  "Permite cambiar caracteres que 'encierran' un texto.
+  Plug 'tpope/vim-surround'
+
+  "Modo libre de distracciones
+  Plug 'junegunn/goyo.vim' 
+
+  "Hace que se resalten los tags html
+  Plug 'valloric/MatchTagAlways' 
+
+  "Permite extender la funcionalidad de %
+  Plug 'adelarsq/vim-matchit'
+
+  "Fuzzy finder.
+  Plug 'junegunn/fzf'
+
+  "Fuzzy finder.
+  Plug 'junegunn/fzf.vim'
+
+  "Señala las lineas modificadas.
+  Plug 'airblade/vim-gitgutter'
+
+  "Agrega soporte para git.
+  Plug 'tpope/vim-fugitive'
+
+  "Detección de errores y autocompletado"
+  Plug 'dense-analysis/ale'
+
+  "Navegador de archivos
+  Plug 'lambdalisue/fern.vim'
+
+  "Señala el estado de los archivos en git
+  Plug 'lambdalisue/fern-git-status.vim' 
+
+  "Ember
+  Plug 'joukevandermaas/vim-ember-hbs' 
+
+  "Repetir en selecciones visuales
+  Plug 'inkarkat/vim-visualrepeat' 
+
+  "Permite maximizar o restaurar un panel
+  Plug 'szw/vim-maximizer' 
+
+  "Mejora el plegado de código.
+  Plug 'pseewald/vim-anyfold'
+
+  "Permite alternar booleanos.
+  Plug 'AndrewRadev/switch.vim'
+
+  "Prettier
+  Plug 'prettier/vim-prettier', {'do': 'yarn install', 'branch': 'release/0.x' }
+
+  "Prueba
+  Plug 'Shougo/context_filetype.vim'
+
+  "Autocompleta pulsado tab
+  Plug 'ervandew/supertab'
+
+  "Permite traducir textos usando el comando translate-text
+  Plug 'echuraev/translate-shell.vim'
+  "ejemplo, seleccionar un bloque y luego :B !trans -t pt -brief
+  Plug 'vim-scripts/vis'
+
+  "Colorea código html dentro de strings
+  Plug 'jonsmithers/vim-html-template-literals'
+  Plug 'leafgarland/typescript-vim'
+
+  "Tema de color monokai
+  Plug 'sickill/vim-monokai'
 
 call plug#end()
-
-
-"Permite que UltSnips no conflictúe con COC
-let g:UltiSnipsExpandTrigger = "<nop>"
-
-"Instalando extensiones para autocompletar código JavaScript y TypeScript.
-let g:coc_global_extensions = [
-  \ 'coc-tsserver', 
-  \ 'coc-ultisnips', 
-  \ 'coc-json', 
-  \ 'coc-python', 
-  \ 'coc-svelte', 
-  \ 'coc-eslint', 
-  \ 'coc-prettier'
-  \ ]
 
 "Solo actualiza las lineas modificadas en git cuando guarda un archivo
 autocmd BufWritePost * GitGutter
@@ -93,9 +160,6 @@ au! BufWritePost .vimrc so %
 autocmd Filetype * AnyFoldActivate
 let g:anyfold_fold_comments=1
 set foldlevel=99
-
-"ATAJOS DE TECLADO
-"=================
 
 "Alternar archivos
 map <silent> <c-u> :e#<CR>
@@ -120,8 +184,11 @@ map <leader>4 :set foldlevel=999<CR>
 "Alterna maximizado del panel
 map <C-a> :MaximizerToggle<CR>
 
+"Alterna booleanos
+nmap tt :Switch<CR>
+
 "Muestra la ayuda de atajos
-map <silent> <leader>h :WhichKey 'f'<cr>
+map <silent> <leader>h :WhichKey ' '<cr>
 
 "Busqueda en el contenido de los archivos
 map <leader>f :Rg 
@@ -144,59 +211,33 @@ map <silent> <leader>b :GitFiles -m<CR>
 map <silent> <leader>m :GitFiles?<CR>
 map <silent> <leader>o :Files<CR>
 
+"Simplifica el paso a modo comando
+nmap ; :
 
 "Abre gitui
 map <silent> <leader>g :!gitui<CR>
 
 "Oscurece el color de fondo del editor
+" (otros color para gui: "#12121B")
 let g:onedark_color_overrides = {
-\ "black": {
-\      "gui": "#12121B",
-\      "cterm": "1235", 
-\      "cterm16": "20"
-\ }
-\}
-
-"let g:onedark_color_overrides = {
-"\ "black": {
-"\      "gui": "#16191d",
-"\      "cterm": "1235", 
-"\      "cterm16": "20"
-"\ }
-"\}
+      \ "black": {
+      \     "gui": "#000000", 
+      \     "cterm": "235", 
+      \     "cterm16": "0" 
+      \   }
+      \ }
 
 "Define el tema de colores
 colorscheme onedark
 set termguicolors
 
-"Demora el resalatado de palabras idénticas
-let g:Illuminate_delay = 2000
-
-"Configuración de COC
-set hidden
-set nobackup
-set nowritebackup
-set cmdheight=2        " necesita ser 2 para mostrar errores
-set updatetime=300
-set shortmess+=c
-set signcolumn=yes
-set laststatus=2
-
 
 "Abreviaturas
 iab ipdb import ipdb; ipdb.set_trace()
 iab debugger debugger; // eslint-disable-line
+iab html5 <!DOCTYPE html><CR> <html><CR> <head><CR> <script type="text/javascript" src=""></script><CR> <link rel="stylesheet" href=""><CR> </head><CR> <body><CR> </body><CR> </html><CR>
 
-
-"Atajos de refactorización y navegación
-xmap <leader>r  <Plug>(coc-codeaction-selected)
-nmap <leader>r  <Plug>(coc-codeaction-selected)
-nmap <leader>R  <Plug>(coc-codeaction)
-
-nmap <leader>d <Plug>(coc-definition)
-nmap <leader>i <Plug>(coc-implementation)
-"nmap <leader>e <Plug>(coc-references)
-
+nmap <silent> gd :ALEGoToDefinition<CR>
 
 "Define qué mostrar en la parte inferior de la pantalla.
 set statusline=
@@ -224,9 +265,9 @@ set novisualbell
 
 "Mejoras en los símbolos del arbol de archivos
 let g:fern#renderer#default#collapsed_symbol = '+ '
-let g:fern#renderer#default#expanded_symbol = '- '
+let g:fern#renderer#default#expanded_symbol = '-  '
 let g:fern#renderer#default#leading          = ' '
-let g:fern#renderer#default#leaf_symbol      = '  '
+let g:fern#renderer#default#leaf_symbol      = '. '
 let g:fern#renderer#default#root_symbol = '~ '
 
 "Preferencias para mostrar el status de git.
@@ -235,41 +276,7 @@ let g:fern_git_status#disable_untracked = 1
 let g:fern_git_status#disable_submodules = 1
 
 let $FZF_DEFAULT_OPTS .= ' --no-info'
-let g:asyncomplete_auto_popup = 0
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ asyncomplete#force_refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-if executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'allowlist': ['python'],
-        \ })
-endif
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+let g:ssyncomplete_auto_popup = 0
 
 function! s:gitModified()
     let files = systemlist('git ls-files -m 2>/dev/null')
@@ -284,3 +291,77 @@ endfunction
 
 "Oculta la previsualización en FZF aunque permite habilitarla con ctrl-/
 let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
+
+"Oculta el header 
+let g:netrw_banner=0
+
+"Autocompletado con tab
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+set completeopt=menuone,noinsert
+set omnifunc=ale#completion#OmniFunc
+set pumheight=8
+
+"Configuración ALE
+let g:ale_sign_error = '•'
+let g:ale_sign_warning = '∘'
+
+"Siempre de deja un espacio para los signos del linter.
+set signcolumn=yes
+
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+      \ 'javascript': ['prettier'], 
+      \ 'typescript': ['prettier']}
+
+let g:ale_linters = {}
+
+
+set nobackup
+set nowritebackup
+
+"Permite previsualizar archivos pulsando p
+function! s:fern_preview_init() abort
+    nmap <buffer><expr>
+        \ <Plug>(fern-my-preview-or-nop)
+        \ fern#smart#leaf(
+        \   "\<Plug>(fern-action-open:edit)\<C-w>p",
+        \   "",
+        \ )
+  nmap <buffer><expr> p
+        \ fern#smart#drawer(
+        \   "\<Plug>(fern-my-preview-or-nop)",
+        \   "u",
+        \ )
+endfunction
+
+augroup my-fern-preview
+  set hidden
+  autocmd! *
+  autocmd FileType fern call s:fern_preview_init()
+augroup END
+
+
+if !exists('g:context_filetype#same_filetypes')
+  let g:context_filetype#filetypes = {}
+endif
+
+
+let g:ft = ''
+
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+
+
+"Atajos a símbolos de programación
+
+imap <c-h> {
+imap <c-l> }
+imap <c-j> (
+imap <c-k> )
+
+imap <c-u> <
+imap <c-i> >
+
+
+
+highlight LineNr ctermfg=red guifg=#75419A
