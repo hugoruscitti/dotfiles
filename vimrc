@@ -196,8 +196,8 @@ map <leader>F :CtrlSF<CR>
 map <leader>e :Rg <C-R><C-W><CR>
 
 "Permite guardar con CMD+s
-noremap  <C-s> :w<CR>
-inoremap <silent> <C-s> <ESC>:w<CR>l
+"noremap  <C-s> :w<CR>
+"inoremap <silent> <C-s> <ESC>:w<CR>l
 
 "Permite saltar entre cambios
 nmap <c-h> :GitGutterPrevHunk<CR>
