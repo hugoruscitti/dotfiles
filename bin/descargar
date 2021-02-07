@@ -42,6 +42,11 @@ def main():
     # Convierte a markdown
     os.system(f"pandoc tmp.html -o tmp.md -t markdown_strict --wrap=auto")
 
+
+    # Agrega el link original al archivo mardown
+    texto = f"- Artículo extraído desde:\n [{url}]({url})"
+    os.system('echo "' + texto + '\n\n$(cat tmp.md)" > tmp.md')
+
     # Agrega metadata al archivo markdown
     print(link_markdown)
 
@@ -54,6 +59,8 @@ def main():
 
     print(f"Editando archivo links: {ARCHIVO_LINKS}")
     print(f"Creando el archivo: {destino}")
+
+    os.system("rm tmp.html")
 
     
 if __name__ == "__main__":
