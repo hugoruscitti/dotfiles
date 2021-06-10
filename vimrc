@@ -4,7 +4,7 @@ set autoread
 set autowrite
 set autowriteall
 set backspace=2
-set cindent
+set nocindent
 set expandtab
 set incsearch
 set mouse=
@@ -13,7 +13,6 @@ set noswapfile
 set nowrap
 set number
 set re=0
-set relativenumber
 set shiftwidth=2
 set smartindent
 set softtabstop=2
@@ -27,6 +26,10 @@ filetype plugin indent on
 "Atajos de teclado
 let mapleader = ' '
 set timeoutlen=1500
+
+"Atajo para copiar y pegar en el clipboard del sistema
+vnoremap <leader>y "+y
+map <leader>Y "+gP
 
 "Permite editar el archivo .vimrc pulsando ,m
 map ,m :e ~/.vimrc<CR>
@@ -51,21 +54,18 @@ call plug#begin('~/.vim/plugged')
   "Soporte para typescript
   Plug 'leafgarland/typescript-vim'
 
+  "Soporte para chequeos gramaticales
+  Plug 'rhysd/vim-grammarous'
+
   "Temas
   Plug 'joshdick/onedark.vim'
   Plug 'arzg/vim-colors-xcode'
-
-  "Muestras los atajos personalizados
-  Plug 'liuchengxu/vim-which-key'
 
   "Permite unir o separar bloques en varias lineas.
   Plug 'AndrewRadev/splitjoin.vim' 
 
   "Colores en css
   Plug 'ap/vim-css-color'
-
-  "Snippets que se activa con TAB
-  Plug 'SirVer/ultisnips'
 
   "Resaltado de sintaxis para scripts de fish
   Plug 'dag/vim-fish'
@@ -93,8 +93,6 @@ call plug#begin('~/.vim/plugged')
 
   "Fuzzy finder.
   Plug 'junegunn/fzf'
-
-  "Fuzzy finder.
   Plug 'junegunn/fzf.vim'
 
   "Señala las lineas modificadas.
@@ -114,9 +112,6 @@ call plug#begin('~/.vim/plugged')
 
   "Ember
   Plug 'joukevandermaas/vim-ember-hbs' 
-
-  "Repetir en selecciones visuales
-  Plug 'inkarkat/vim-visualrepeat' 
 
   "Permite maximizar o restaurar un panel
   Plug 'szw/vim-maximizer' 
@@ -168,6 +163,11 @@ map <silent> <c-u> :e#<CR>
 vmap <leader>/ <Plug>NERDCommenterToggle
 nmap <leader>/ <Plug>NERDCommenterToggle
 
+"Corrección ortografica
+noremap <leader>s :GrammarousCheck --lang=es<CR>
+noremap <leader>a :GrammarousReset<CR>
+
+
 "Mostrar el arbol de archivos
 map <silent> <leader>\ :Fern . -reveal=% -drawer -toggle -width=50<CR>
 
@@ -187,17 +187,10 @@ map <C-a> :MaximizerToggle<CR>
 "Alterna booleanos
 nmap tt :Switch<CR>
 
-"Muestra la ayuda de atajos
-map <silent> <leader>h :WhichKey ' '<cr>
-
 "Busqueda en el contenido de los archivos
-map <leader>f :Rg 
-map <leader>F :CtrlSF<CR>
-map <leader>e :Rg <C-R><C-W><CR>
-
-"Permite guardar con CMD+s
-"noremap  <C-s> :w<CR>
-"inoremap <silent> <C-s> <ESC>:w<CR>l
+nnoremap <leader>f :Rg 
+nnoremap <leader>F :CtrlSF <c-r>=expand("<cword>")<cr>
+nnoremap <leader>e :Rg <C-R><C-W><CR>
 
 "Permite saltar entre cambios
 nmap <c-h> :GitGutterPrevHunk<CR>
@@ -207,9 +200,7 @@ nmap <c-l> :GitGutterNextHunk<CR>
 
 "Permite hacer búsquedas rápidas
 map <silent> <leader>p :GFiles --exclude-standard --others --cached<CR>
-map <silent> <leader>b :GitFiles -m<CR>
 map <silent> <leader>m :GitFiles?<CR>
-map <silent> <leader>o :Files<CR>
 
 "Simplifica el paso a modo comando
 nmap ; :
@@ -257,7 +248,6 @@ hi User2 guibg=#2A323B guifg=white
 
 "Define los colores de fondo para el status activo e inactivos.
 hi StatusLine guibg=#2A323B guifg=white
-
 hi StatusLineNC guibg=#2A323B guifg=darkgray
 
 set visualbell t_vb=
@@ -296,7 +286,7 @@ let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
 let g:netrw_banner=0
 
 "Autocompletado con tab
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabDefaultCompletionType = "<c-p>"
 set completeopt=menuone,noinsert
 set omnifunc=ale#completion#OmniFunc
 set pumheight=8
@@ -351,17 +341,8 @@ let g:ft = ''
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
-
-"Atajos a símbolos de programación
-
-imap <c-h> {
-imap <c-l> }
-imap <c-j> (
-imap <c-k> )
-
-imap <c-u> <
-imap <c-i> >
-
-
-
 highlight LineNr ctermfg=red guifg=#75419A
+
+" Hacer que las palabras separadas con guiones se tomen como una sola palabra.
+set iskeyword+=-
+nnoremap <leader>w :w<CR>
