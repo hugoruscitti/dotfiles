@@ -1,0 +1,49 @@
+#!/usr/local/bin/python3
+
+import os
+import sys
+from datetime import datetime
+
+if len(sys.argv) != 2:
+    print("Tienes que especificar el nombre del post")
+    sys.exit(1)
+
+
+
+if not 'examplelab' in os.getcwd():
+    print("Tienes que estar dentro del directorio del blog")
+    sys.exit(1)
+
+fecha = datetime.today().strftime('%Y-%m-%d')
+año = datetime.today().strftime('%Y')
+nombre = sys.argv[-1]
+
+archivo = f"{fecha}-{nombre}.markdown"
+archivo_con_ruta_completa = f"content/posts/{archivo}"
+directorio_de_imágenes = f"static/images/{año}/{nombre}"
+
+
+template = f"""
+---
+layout: post
+title: {nombre}
+date: '{fecha} 00:00:00'
+description: |
+  Contenido ...
+cover: /images/2021/{nombre}/portada.jpg
+---
+
+Contenido ...
+"""
+
+
+print(f"Creando el directorio de imágenes: {directorio_de_imágenes}")
+os.mkdir(directorio_de_imágenes)
+os.system(f"touch {directorio_de_imágenes}/.gitkeep")
+
+print(f"Creando archivo para escribir el post: {archivo_con_ruta_completa}")
+archivo = open(archivo_con_ruta_completa, "wt")
+archivo.write(template)
+
+archivo.close()
+

@@ -7,11 +7,14 @@ DIRECTORIO_LINKS = "/Users/hugoruscitti/proyectos/examplelab/content/links-files
 ARCHIVO_LINKS = "/Users/hugoruscitti/proyectos/examplelab/content/links.md"
 
 def extraer_titulo(archivo_html):
-    with open(archivo_html, 'r') as file:
-        for line in file:
-            for item in line.split('<title>'):
-                if '</title>' in item:
-                    return str.strip(item.split('</title>')[0])
+    try:
+        with open(archivo_html, 'r') as file:
+            for line in file:
+                for item in line.split('<title>'):
+                    if '</title>' in item:
+                        return str.strip(item.split('</title>')[0])
+    except UnicodeDecodeError:
+        pass
 
     return "Sin titulo"
 
