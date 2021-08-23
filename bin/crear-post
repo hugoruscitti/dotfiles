@@ -23,8 +23,7 @@ archivo_con_ruta_completa = f"content/posts/{archivo}"
 directorio_de_imágenes = f"static/images/{año}/{nombre}"
 
 
-template = f"""
----
+template = f"""---
 layout: post
 title: {nombre}
 date: '{fecha} 00:00:00'

@@ -27,6 +27,9 @@ filetype plugin indent on
 let mapleader = ' '
 set timeoutlen=1500
 
+"Formateado de código
+map ff :Neoformat<cr>
+
 "Atajo para copiar y pegar en el clipboard del sistema
 vnoremap <leader>y "+y
 map <leader>Y "+gP
@@ -46,8 +49,6 @@ let g:vim_npr_file_types = ["js", "jsx", "css", "coffee", "ts"]
 "Colorea todos los strings que parecen html
 let g:htl_all_templates = 1
 
-let g:ale_completion_enabled = 0
-
 " Plugins
 call plug#begin('~/.vim/plugged')
 
@@ -57,9 +58,17 @@ call plug#begin('~/.vim/plugged')
   "Soporte para chequeos gramaticales
   Plug 'rhysd/vim-grammarous'
 
+  "Auto formato con prettier
+  Plug 'sbdchd/neoformat'
+
+  Plug 'epmor/lampaces-demon-vim'
+
   "Temas
   Plug 'joshdick/onedark.vim'
   Plug 'arzg/vim-colors-xcode'
+  Plug 'sstallion/vim-wtf'
+  Plug 'kyoz/purify', { 'rtp': 'vim' }
+  Plug 'dracula/vim', { 'as': 'dracula' }
 
   "Permite unir o separar bloques en varias lineas.
   Plug 'AndrewRadev/splitjoin.vim' 
@@ -70,20 +79,11 @@ call plug#begin('~/.vim/plugged')
   "Resaltado de sintaxis para scripts de fish
   Plug 'dag/vim-fish'
 
-  "Busca símbolos rápidamente
-  Plug 'pechorin/any-jump.vim' 
-
   "Busqueda en todo el proyecto por palabras
   Plug 'dyng/ctrlsf.vim' 
 
   "Permite comentar bloques.
   Plug 'preservim/nerdcommenter' 
-
-  "Permite cambiar caracteres que 'encierran' un texto.
-  Plug 'tpope/vim-surround'
-
-  "Modo libre de distracciones
-  Plug 'junegunn/goyo.vim' 
 
   "Hace que se resalten los tags html
   Plug 'valloric/MatchTagAlways' 
@@ -101,9 +101,6 @@ call plug#begin('~/.vim/plugged')
   "Agrega soporte para git.
   Plug 'tpope/vim-fugitive'
 
-  "Detección de errores y autocompletado"
-  Plug 'dense-analysis/ale'
-
   "Navegador de archivos
   Plug 'lambdalisue/fern.vim'
 
@@ -120,7 +117,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'pseewald/vim-anyfold'
 
   "Permite alternar booleanos.
-  Plug 'AndrewRadev/switch.vim'
+  "Plug 'AndrewRadev/switch.vim'
 
   "Prettier
   Plug 'prettier/vim-prettier', {'do': 'yarn install', 'branch': 'release/0.x' }
@@ -131,10 +128,11 @@ call plug#begin('~/.vim/plugged')
   "Autocompleta pulsado tab
   Plug 'ervandew/supertab'
 
-  "Permite traducir textos usando el comando translate-text
-  Plug 'echuraev/translate-shell.vim'
+  "Traduccion de textos
+  Plug 'voldikss/vim-translator'
+
   "ejemplo, seleccionar un bloque y luego :B !trans -t pt -brief
-  Plug 'vim-scripts/vis'
+  "Plug 'vim-scripts/vis'
 
   "Colorea código html dentro de strings
   Plug 'jonsmithers/vim-html-template-literals'
@@ -164,8 +162,18 @@ vmap <leader>/ <Plug>NERDCommenterToggle
 nmap <leader>/ <Plug>NERDCommenterToggle
 
 "Corrección ortografica
-noremap <leader>s :GrammarousCheck --lang=es<CR>
-noremap <leader>a :GrammarousReset<CR>
+noremap <leader>S :GrammarousCheck --lang=es<CR>
+noremap <leader>A :GrammarousReset<CR>
+
+
+"Manejo de splits
+map <leader>q <c-w>q
+map <leader>j <c-w>j
+map <leader>k <c-w>k
+map <leader>h <c-w>h
+map <leader>l <c-w>l
+map <leader>s <c-w>s
+map <leader>v <c-w>v
 
 
 "Mostrar el arbol de archivos
@@ -182,7 +190,8 @@ map <leader>3 :set foldlevel=2<CR>
 map <leader>4 :set foldlevel=999<CR>
 
 "Alterna maximizado del panel
-map <C-a> :MaximizerToggle<CR>
+let g:maximizer_set_default_mapping = 0
+map <leader>a :MaximizerToggle<CR>
 
 "Alterna booleanos
 nmap tt :Switch<CR>
@@ -200,7 +209,7 @@ nmap <c-l> :GitGutterNextHunk<CR>
 
 "Permite hacer búsquedas rápidas
 map <silent> <leader>p :GFiles --exclude-standard --others --cached<CR>
-map <silent> <leader>m :GitFiles?<CR>
+map <silent> <leader>o :GitFiles?<CR>
 
 "Simplifica el paso a modo comando
 nmap ; :
@@ -218,13 +227,30 @@ let g:onedark_color_overrides = {
       \   }
       \ }
 
+
+"Agrega soporte para truecolor
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 "Define el tema de colores
-colorscheme onedark
-set termguicolors
+
+let g:wtf_pedantic_guicolors = 1
+"colorscheme onedark
+"colorscheme wtf
+"colorscheme purify
+let g:dracula_italic = 0
+colorscheme dracula
+
+"Para dracula, es mejor un fondo más oscuro.
+highlight Normal ctermbg=NONE guibg=NONE
 
 
 "Abreviaturas
 iab ipdb import ipdb; ipdb.set_trace()
+iab pudb import pudb; pudb.set_trace()
 iab debugger debugger; // eslint-disable-line
 iab html5 <!DOCTYPE html><CR> <html><CR> <head><CR> <script type="text/javascript" src=""></script><CR> <link rel="stylesheet" href=""><CR> </head><CR> <body><CR> </body><CR> </html><CR>
 
@@ -265,7 +291,6 @@ let g:fern_git_status#disable_ignored = 1
 let g:fern_git_status#disable_untracked = 1
 let g:fern_git_status#disable_submodules = 1
 
-let $FZF_DEFAULT_OPTS .= ' --no-info'
 let g:ssyncomplete_auto_popup = 0
 
 function! s:gitModified()
@@ -288,23 +313,11 @@ let g:netrw_banner=0
 "Autocompletado con tab
 let g:SuperTabDefaultCompletionType = "<c-p>"
 set completeopt=menuone,noinsert
-set omnifunc=ale#completion#OmniFunc
 set pumheight=8
 
-"Configuración ALE
-let g:ale_sign_error = '•'
-let g:ale_sign_warning = '∘'
 
 "Siempre de deja un espacio para los signos del linter.
 set signcolumn=yes
-
-let g:ale_fix_on_save = 1
-let g:ale_fixers = {
-      \ 'javascript': ['prettier'], 
-      \ 'typescript': ['prettier']}
-
-let g:ale_linters = {}
-
 
 set nobackup
 set nowritebackup
@@ -335,14 +348,23 @@ if !exists('g:context_filetype#same_filetypes')
   let g:context_filetype#filetypes = {}
 endif
 
+"Evitar que git-gutter agregre mapeos de teclado
+let g:gitgutter_map_keys = 0
 
 let g:ft = ''
-
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
 
 highlight LineNr ctermfg=red guifg=#75419A
 
 " Hacer que las palabras separadas con guiones se tomen como una sola palabra.
 set iskeyword+=-
 nnoremap <leader>w :w<CR>
+
+map ttn vi":'<,'>TranslateR --target_lang=en<cr>
+map tte vi":'<,'>TranslateR --target_lang=es<cr>
+map ttp vi":'<,'>TranslateR --target_lang=pt<cr>
+
+
+map <leader>u :tabedit ~/tareas-para-hacer.md<cr>
+
+:map <leader><leader> :set invhlsearch<cr>
+
