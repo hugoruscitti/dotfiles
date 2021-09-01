@@ -8,6 +8,7 @@ de vim, fish, y otras herramientas.
 ln -s ~/proyectos/dotfiles/alacritty.yml ~/.alacritty.yml
 ln -s ~/proyectos/dotfiles/vimrc ~/.vimrc
 ln -s ~/proyectos/dotfiles/config.fish ~/.config/fish/fish.config
+ln -s proyectos/dotfiles/tmux.conf ~/.tmux.conf
 
 rm -rf ~/.config/karabiner
 ln -s ~/proyectos/dotfiles/karabiner ~/.config/karabiner
