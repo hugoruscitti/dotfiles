@@ -16,6 +16,67 @@
                 },
                 "rules": [
                   {
+                        "description": "Hacer que ESC produzca el tilde",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "escape",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "grave_accent_and_tilde"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "right_shift",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "right_shift pressed",
+                                            "value": 1
+                                        }
+                                    },
+                                    {
+                                        "key_code": "right_shift"
+                                    }
+                                ],
+                                "to_delayed_action": {
+                                    "to_if_canceled": [
+                                        {
+                                            "set_variable": {
+                                                "name": "right_shift pressed",
+                                                "value": 0
+                                            }
+                                        }
+                                    ],
+                                    "to_if_invoked": [
+                                        {
+                                            "set_variable": {
+                                                "name": "right_shift pressed",
+                                                "value": 0
+                                            }
+                                        }
+                                    ]
+                                },
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                  {
                         "description": "Dos veces shift derecho alterna mayúsculas",
                         "manipulators": [
                             {
@@ -191,7 +252,7 @@
                             }
                         ]
                     },
-	{
+	                  {
                         "description": "CAPS_LOCK + i j k l == flechas",
                         "manipulators": [
                             {
