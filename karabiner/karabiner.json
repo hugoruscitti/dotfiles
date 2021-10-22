@@ -242,9 +242,12 @@
                                 ],
                                 "to_if_alone": [
                                     {
-                                        "key_code": "tab",
+                                        "key_code": "o",
                                         "modifiers": [
-                                            "left_command"
+                                          "left_shift",
+                                          "left_control",
+                                          "left_option",
+                                          "left_command"
                                         ]
                                     }
                                 ],
