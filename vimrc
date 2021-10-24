@@ -366,5 +366,6 @@ map ttp vi":'<,'>TranslateR --target_lang=pt<cr>
 
 map <leader>u :tabedit ~/tareas-para-hacer.md<cr>
 
-:map <leader><leader> :set invhlsearch<cr>
+:map <shift><leader><leader> :set invhlsearch<cr>
+:map <leader><leader> :w<cr>
 
