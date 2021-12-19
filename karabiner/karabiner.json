@@ -15,7 +15,7 @@
                     "mouse_motion_to_scroll.speed": 100
                 },
                 "rules": [
-                  {
+                    {
                         "description": "Hacer que ESC produzca el tilde",
                         "manipulators": [
                             {
@@ -76,7 +76,7 @@
                             }
                         ]
                     },
-                  {
+                    {
                         "description": "Dos veces shift derecho alterna mayúsculas",
                         "manipulators": [
                             {
@@ -244,10 +244,10 @@
                                     {
                                         "key_code": "o",
                                         "modifiers": [
-                                          "left_shift",
-                                          "left_control",
-                                          "left_option",
-                                          "left_command"
+                                            "left_shift",
+                                            "left_control",
+                                            "left_option",
+                                            "left_command"
                                         ]
                                     }
                                 ],
@@ -255,7 +255,7 @@
                             }
                         ]
                     },
-	                  {
+                    {
                         "description": "CAPS_LOCK + i j k l == flechas",
                         "manipulators": [
                             {
@@ -375,7 +375,21 @@
                     }
                 ]
             },
-            "devices": [],
+            "devices": [
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 10241,
+                        "vendor_id": 2362
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false,
+                    "simple_modifications": []
+                }
+            ],
             "fn_function_keys": [
                 {
                     "from": {

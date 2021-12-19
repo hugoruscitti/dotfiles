@@ -52,6 +52,9 @@ let g:htl_all_templates = 1
 " Plugins
 call plug#begin('~/.vim/plugged')
 
+  "Soporte svelte
+  Plug 'evanleck/vim-svelte', {'branch': 'main'}
+
   "Soporte para typescript
   Plug 'leafgarland/typescript-vim'
 
@@ -142,6 +145,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'sickill/vim-monokai'
 
 call plug#end()
+
+
+let g:svelte_preprocessors = ['typescript']
+
 
 "Solo actualiza las lineas modificadas en git cuando guarda un archivo
 autocmd BufWritePost * GitGutter
