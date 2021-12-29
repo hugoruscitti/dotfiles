@@ -55,6 +55,9 @@ call plug#begin('~/.vim/plugged')
   "Soporte svelte
   Plug 'evanleck/vim-svelte', {'branch': 'main'}
 
+  "Wiki para vim
+  Plug 'vimwiki/vimwiki'
+
   "Soporte para typescript
   Plug 'leafgarland/typescript-vim'
 
@@ -376,3 +379,10 @@ map <leader>u :tabedit ~/tareas-para-hacer.md<cr>
 :map <shift><leader><leader> :set invhlsearch<cr>
 :map <leader><leader> :w<cr>
 
+
+"Configuración de vimwiki
+let g:vimwiki_list = [
+      \ {
+        \ 'path': '/Users/hugoruscitti/Library/Mobile Documents/com~apple~CloudDocs/wiki/', 
+        \ 'path_html': '~/public_html/'
+      \ }]
