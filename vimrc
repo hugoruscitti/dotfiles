@@ -383,6 +383,6 @@ map <leader>u :tabedit ~/tareas-para-hacer.md<cr>
 "Configuración de vimwiki
 let g:vimwiki_list = [
       \ {
-        \ 'path': '/Users/hugoruscitti/Library/Mobile Documents/com~apple~CloudDocs/wiki/', 
+        \ 'path': '~/Library/Mobile Documents/com~apple~CloudDocs/wiki/', 
         \ 'path_html': '~/public_html/'
       \ }]
