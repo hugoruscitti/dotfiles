@@ -52,6 +52,9 @@ let g:htl_all_templates = 1
 " Plugins
 call plug#begin('~/.vim/plugged')
 
+  "Permite saltar entre símbolos
+  Plug 'pechorin/any-jump.vim'
+
   "Soporte svelte
   Plug 'evanleck/vim-svelte', {'branch': 'main'}
 
@@ -386,3 +389,13 @@ let g:vimwiki_list = [
         \ 'path': '~/Library/Mobile Documents/com~apple~CloudDocs/wiki/', 
         \ 'path_html': '~/public_html/'
       \ }]
+
+
+"Muestra los tabs
+set list
+set listchars=tab:--→
+
+"Desactiva el mapeo de teclado de anyjump
+let g:any_jump_disable_default_keybindings = 1
+nnoremap <leader>J :AnyJump<CR>
+nnoremap <leader>O :AnyJumpLastResults<CR>
