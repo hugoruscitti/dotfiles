@@ -60,6 +60,7 @@ call plug#begin('~/.vim/plugged')
 
   "Wiki para vim
   Plug 'vimwiki/vimwiki'
+  Plug 'michal-h21/vimwiki-sync'
 
   "Soporte para typescript
   Plug 'leafgarland/typescript-vim'
@@ -386,7 +387,7 @@ map <leader>u :tabedit ~/tareas-para-hacer.md<cr>
 "Configuración de vimwiki
 let g:vimwiki_list = [
       \ {
-        \ 'path': '~/Library/Mobile Documents/com~apple~CloudDocs/wiki/', 
+        \ 'path': '~/proyectos/vimwiki/', 
         \ 'path_html': '~/public_html/'
       \ }]
 
