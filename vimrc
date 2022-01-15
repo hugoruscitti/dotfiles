@@ -52,6 +52,14 @@ let g:htl_all_templates = 1
 " Plugins
 call plug#begin('~/.vim/plugged')
 
+  "Plugins para svelte"
+  Plug 'evanleck/vim-svelte'
+  Plug 'pangloss/vim-javascript'
+  Plug 'HerringtonDarkholme/yats.vim'
+
+  Plug 'Shougo/context_filetype.vim'
+
+
   "Permite saltar entre símbolos
   Plug 'pechorin/any-jump.vim'
 
@@ -400,3 +408,13 @@ set listchars=tab:--→
 let g:any_jump_disable_default_keybindings = 1
 nnoremap <leader>J :AnyJump<CR>
 nnoremap <leader>O :AnyJumpLastResults<CR>
+
+
+"Configuración para hacer que se puedan usar
+"distintas sintaxis en los archivos
+if !exists('g:context_filetype#same_filetypes')
+    let g:context_filetype#filetypes = {}
+  endif
+
+let g:context_filetype#filetypes.svelte =  [ {'filetype' : 'javascript', 'start' : '<script>', 'end' : '</script>'}, { 'filetype': 'typescript', 'start': '<script\%( [^>]*\)\?  \%(ts\|lang="\%(ts\|typescript\)"\)\%( [^>]*\)\?>', 'end': '',  },  {'filetype' : 'css', 'start' : '<style \?.*>', 'end' : '</style>'}, ]
+let g:ft = ''
