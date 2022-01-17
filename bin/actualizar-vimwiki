@@ -1,0 +1,18 @@
+#!/bin/bash
+cd ~/proyectos/vimwiki
+
+gstatus=`git status --porcelain`
+
+if [ ${#gstatus} -ne 0 ]
+then
+ echo "hay cambios"
+ git add --all
+ echo "commit"
+ git commit -m "$gstatus"
+ echo "pull --rebase"
+ git pull --rebase
+ echo "push"
+ git push
+fi
+
+echo $(date) >> ~/log.txt

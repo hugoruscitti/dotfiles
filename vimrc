@@ -68,7 +68,6 @@ call plug#begin('~/.vim/plugged')
 
   "Wiki para vim
   Plug 'vimwiki/vimwiki'
-  Plug 'michal-h21/vimwiki-sync'
 
   "Soporte para typescript
   Plug 'leafgarland/typescript-vim'
@@ -82,9 +81,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'epmor/lampaces-demon-vim'
 
   "Temas
-  Plug 'joshdick/onedark.vim'
-  Plug 'arzg/vim-colors-xcode'
-  Plug 'sstallion/vim-wtf'
   Plug 'kyoz/purify', { 'rtp': 'vim' }
   Plug 'dracula/vim', { 'as': 'dracula' }
 
@@ -134,9 +130,6 @@ call plug#begin('~/.vim/plugged')
   "Mejora el plegado de código.
   Plug 'pseewald/vim-anyfold'
 
-  "Permite alternar booleanos.
-  "Plug 'AndrewRadev/switch.vim'
-
   "Prettier
   Plug 'prettier/vim-prettier', {'do': 'yarn install', 'branch': 'release/0.x' }
 
@@ -148,9 +141,6 @@ call plug#begin('~/.vim/plugged')
 
   "Traduccion de textos
   Plug 'voldikss/vim-translator'
-
-  "ejemplo, seleccionar un bloque y luego :B !trans -t pt -brief
-  "Plug 'vim-scripts/vis'
 
   "Colorea código html dentro de strings
   Plug 'jonsmithers/vim-html-template-literals'
@@ -399,6 +389,12 @@ let g:vimwiki_list = [
         \ 'path_html': '~/public_html/'
       \ }]
 
+"Evita ocultar caracteres en vimwiki
+let g:vimwiki_conceallevel = 0
+
+"Cambia el estilo de los links en vimwiki (quita subrayado y aplica un color
+"diferente)
+hi! def link VimwikiLink Keyword
 
 "Muestra los tabs
 set list
