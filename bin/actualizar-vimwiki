@@ -3,6 +3,7 @@ cd ~/proyectos/vimwiki
 
 gstatus=`git status --porcelain`
 
+
 if [ ${#gstatus} -ne 0 ]
 then
  echo "hay cambios"
@@ -14,5 +15,7 @@ then
  echo "push"
  git push
 fi
+
+git pull
 
 echo $(date) >> ~/log.txt
