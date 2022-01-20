@@ -46,6 +46,7 @@ end
 # CONFIGURACIÓN DE PATHs
 # ======================
 
+set -x PATH ~/.cargo/bin $PATH
 set -x PATH ~/proyectos/mgit/bin $PATH
 set -x PATH ~/Library/Android/sdk/platform-tools $PATH
 set -x PATH ~/Library/Android/sdk/tools $PATH
