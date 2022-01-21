@@ -47,7 +47,7 @@ end
 # ======================
 
 set -x PATH ~/.cargo/bin $PATH
-set -x PATH ~/proyectos/mgit/bin $PATH
+set -x PATH ~/proyectos/dotfiles/bin $PATH
 set -x PATH ~/Library/Android/sdk/platform-tools $PATH
 set -x PATH ~/Library/Android/sdk/tools $PATH
 set -x PATH /usr/local/bin/ $PATH
