@@ -220,7 +220,7 @@ nmap <c-h> :GitGutterPrevHunk<CR>
 nmap <c-l> :GitGutterNextHunk<CR>
 
 "Permite hacer búsquedas rápidas
-map <silent> <leader>p :GFiles --exclude-standard --others --cached<CR>
+map <silent> <leader>p :FZF<CR>
 map <silent> <leader>o :GitFiles?<CR>
 
 "Simplifica el paso a modo comando
