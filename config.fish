@@ -7,6 +7,7 @@ set -x NO_UPDATE_NOTIFIER 1
 set -x LC_ALL en_US.UTF-8
 set -x LANG en_US.UTF-8
 set -x FZF_DEFAULT_COMMAND "fd -t f"
+set -x NVM_DIR "~/.nvm"
 
 # =====
 # ALIAS
