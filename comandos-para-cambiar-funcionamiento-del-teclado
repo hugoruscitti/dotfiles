@@ -1,0 +1,5 @@
+setxkbmap -option caps:hyper
+xcape -e 'Hyper_L=Escape'
+autokey & > /dev/null
+xset -r 111
+xset -r 116
