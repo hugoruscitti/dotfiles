@@ -52,6 +52,10 @@ let g:htl_all_templates = 1
 " Plugins
 call plug#begin('~/.vim/plugged')
 
+  "Poder ver el contexto de un código
+  "(desactivado por omisión, se activa con <leader>ct)
+  Plug 'wellle/context.vim'
+
   "Plugins para svelte"
   Plug 'evanleck/vim-svelte'
   Plug 'pangloss/vim-javascript'
@@ -418,3 +422,9 @@ let g:ft = ''
 "Haciendo que se puedan marcar checkboxs con vimwiki
 map <leader>t <Plug>VimwikiToggleListItem
 
+"Desactiva context por omisión
+let g:context_enabled = 0
+map <leader>ct :ContextToggle<cr>
+
+
+map <leader>- o----- ✂ ----- ✂ ----- ✂ ----- ✂ -----<cr><esc>
