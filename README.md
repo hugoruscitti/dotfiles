@@ -14,3 +14,15 @@ rm -rf ~/.config/karabiner
 ln -s ~/proyectos/dotfiles/karabiner ~/.config/karabiner
 launchctl kickstart -k gui/`id -u`/org.pqrs.karabiner.karabiner_console_user_server
 ```
+
+
+Ah, y para la configuración de vim es necesario tener pre-instalado
+[vim-plug](https://github.com/junegunn/vim-plug):
+
+Para instalar en linux y osx:
+
+```
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
