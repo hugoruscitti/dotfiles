@@ -29,7 +29,7 @@ title: {nombre}
 date: '{fecha} 00:00:00'
 description: |
   Contenido ...
-cover: /images/2021/{nombre}/portada.jpg
+cover: /images/2022/{nombre}/portada.jpg
 ---
 
 Contenido ...

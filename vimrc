@@ -52,6 +52,15 @@ let g:htl_all_templates = 1
 " Plugins
 call plug#begin('~/.vim/plugged')
 
+
+  "LSP para vim
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'mattn/vim-lsp-settings'
+
+  "Autocompletado con LSP
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
   "Poder ver el contexto de un código
   "(desactivado por omisión, se activa con <leader>ct)
   Plug 'wellle/context.vim'
@@ -61,6 +70,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'pangloss/vim-javascript'
   Plug 'HerringtonDarkholme/yats.vim'
 
+  "Contexto de archivos
   Plug 'Shougo/context_filetype.vim'
 
 
@@ -141,7 +151,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'Shougo/context_filetype.vim'
 
   "Autocompleta pulsado tab
-  Plug 'ervandew/supertab'
+  "Plug 'ervandew/supertab'
 
   "Traduccion de textos
   Plug 'voldikss/vim-translator'
@@ -428,3 +438,22 @@ map <leader>ct :ContextToggle<cr>
 
 
 map <leader>- o----- ✂ ----- ✂ ----- ✂ ----- ✂ -----<cr><esc>
+
+"Desactivo auto-completado automático
+let g:asyncomplete_auto_popup = 0
+let g:lsp_signature_help_enabled = 0
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+"Para insertar indentación o auto-completar cuando se pulsa la tecla tab.
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ asyncomplete#force_refresh()
+  
+"Para navegar con tab (o shift-tab) en el menú de auto-completado
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
