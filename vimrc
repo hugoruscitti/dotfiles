@@ -89,11 +89,6 @@ call plug#begin('~/.vim/plugged')
   "Soporte para chequeos gramaticales
   Plug 'rhysd/vim-grammarous'
 
-  "Auto formato con prettier
-  Plug 'sbdchd/neoformat'
-
-  Plug 'epmor/lampaces-demon-vim'
-
   "Temas
   Plug 'kyoz/purify', { 'rtp': 'vim' }
   Plug 'dracula/vim', { 'as': 'dracula' }
@@ -457,3 +452,15 @@ inoremap <silent><expr> <TAB>
 "Para navegar con tab (o shift-tab) en el menú de auto-completado
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+let g:lsp_diagnostics_signs_error = {'text': '✗'}
+let g:lsp_diagnostics_signs_warning = {'text': '!'}
+let g:lsp_diagnostics_signs_hint = {'text': '?'}
+let g:lsp_diagnostics_highlights_enabled = 0
+
+
+
+nmap <leader><enter> :LspDefinition<cr>
+"nmap <backspace> <c-o>
+"nmap rr :LspRename<cr>
+"
+set nohlsearch
