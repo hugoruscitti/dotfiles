@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+import os
+import time
+nombre = time.strftime("%Y-%m-%d-%H:%M:%S")
+os.system(f"xclip -selection clipboard -t image/png -o > ~/proyectos/vimwiki/images/{nombre}.png")
+print("{{" + f"file:images/{nombre}.png" + "}}")

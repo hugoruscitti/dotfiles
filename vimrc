@@ -464,3 +464,10 @@ nmap <leader><enter> :LspDefinition<cr>
 "nmap rr :LspRename<cr>
 "
 set nohlsearch
+
+"ir al ticket de gira
+map gt :!open https://clicoh-soft.atlassian.net/browse/<c-r>=expand("<cword>")<CR><CR>
+
+autocmd FileType vimwiki setlocal textwidth=60
+
+map <leader>n :r!pegar-imagen<cr>
