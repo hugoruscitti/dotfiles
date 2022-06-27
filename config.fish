@@ -12,6 +12,7 @@ set -x FZF_DEFAULT_COMMAND "fd -t f"
 # ALIAS
 # =====
 
+alias dockerstopall="docker rm (docker ps -a -q)"
 alias m="cd; cd proyectos/; mgit"
 alias p="cd ~/proyectos; ls *.yaml | fzf | xargs tmuxp load"
 alias ggo="git-open"
@@ -37,8 +38,8 @@ set fish_greeting ''
 
 function fish_prompt
   set_color green
-  printf '%s' (prompt_pwd)
-  printf '%s\n' (__fish_git_prompt)
+  printf "%s $VIM" (prompt_pwd)
+  printf "%s\n" (__fish_git_prompt)
   printf '→ '
   set_color normal
 end
