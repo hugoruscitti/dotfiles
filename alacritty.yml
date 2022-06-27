@@ -337,7 +337,7 @@ cursor:
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-  program: /usr/local/bin/fish
+  program: tmux
 #  args:
 #    - --login
 
