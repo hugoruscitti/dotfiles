@@ -471,3 +471,7 @@ map gt :!open https://clicoh-soft.atlassian.net/browse/<c-r>=expand("<cword>")<C
 autocmd FileType vimwiki setlocal textwidth=60
 
 map <leader>n :r!pegar-imagen<cr>
+
+
+"Genera el indice de entradas del diario automáticamente.
+autocmd BufEnter diary.wiki :VimwikiDiaryGenerateLinks
