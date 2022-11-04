@@ -336,8 +336,8 @@ cursor:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-shell:
-  program: tmux
+#shell:
+#  program: tmux
 #  args:
 #    - --login
 
