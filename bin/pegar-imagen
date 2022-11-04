@@ -1,6 +1,17 @@
 #!/usr/bin/python3
 import os
 import time
+import sys
+
 nombre = time.strftime("%Y-%m-%d-%H:%M:%S")
-os.system(f"xclip -selection clipboard -t image/png -o > ~/proyectos/vimwiki/images/{nombre}.png")
-print("{{" + f"file:images/{nombre}.png" + "}}")
+
+#os.system(f"xclip -selection clipboard -t image/png -o > ~/proyectos/vimwiki/images/{nombre}.png")
+#print("{{" + f"file:images/{nombre}.png" + "}}")
+
+os.system(f"pngpaste ~/proyectos/vimwiki/images/{nombre}.png")
+
+if "diary" in sys.argv[1]:
+    print("{{" + f"file:../images/{nombre}.png" + "}}")
+else:
+    print("{{" + f"file:images/{nombre}.png" + "}}")
+

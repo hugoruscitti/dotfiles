@@ -9,7 +9,7 @@ then
  echo "hay cambios"
  git add --all
  echo "commit"
- git commit -m "$gstatus"
+ PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit -m "$gstatus"
  echo "pull --rebase"
  git pull --rebase
  echo "push"
