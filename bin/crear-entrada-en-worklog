@@ -1,0 +1,38 @@
+#!/Users/hruscitti/.pyenv/shims/python
+
+import os
+import sys
+from datetime import datetime
+
+año = datetime.today().strftime('%Y')
+numero_de_dia = datetime.today().strftime('%d')
+mes = int(datetime.today().strftime('%m'))
+dia = datetime.today().weekday()
+
+meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo",
+         "Junio", "Julio", "Agosto", "Septiembre",
+         "Octubre", "Noviembre", "Diciembre"]
+
+
+nombres = ["Lunes", "Martes", "Miércoles",
+           "Jueves", "Viernes", "Sábado", "Domingo"]
+
+
+nombre_del_dia = nombres[dia]
+nombre_del_mes = meses[mes]
+
+
+print(f"""= {nombre_del_dia} {numero_de_dia} de {nombre_del_mes} de {año} =
+
+== daily ==
+
+
+== worklog ==
+
+
+== shutdown ==
+
+
+----- ✂ ----- ✂ ----- ✂ ----- ✂ -----
+""")
+

@@ -24,6 +24,7 @@
   #TERM: alacritty
 
 window:
+  opacity: 1
   # Window dimensions (changes require restart)
   #
   # Number of lines/columns (not pixels) in the terminal. The number of columns
@@ -46,8 +47,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 5
-    y: 0
+    x: 10
+    y: 10 
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -150,7 +151,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 24.0
+  size: 19.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -276,6 +277,7 @@ colors:
 # The value `0.0` is completely transparent and `1.0` is opaque.
 #background_opacity: 0.9
 
+
 #selection:
   # This string contains all characters that are used as separators for
   # "semantic words" in Alacritty.
@@ -336,8 +338,11 @@ cursor:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-#shell:
-#  program: tmux
+
+shell:
+  program: /opt/homebrew/bin/tmux
+
+#  program: /bin/bash
 #  args:
 #    - --login
 

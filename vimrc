@@ -34,6 +34,7 @@ map ff :Neoformat<cr>
 vnoremap <leader>y "+y
 map <leader>Y "+gP
 
+
 "Permite editar el archivo .vimrc pulsando ,m
 map ,m :e ~/.vimrc<CR>
 
@@ -41,7 +42,7 @@ map ,m :e ~/.vimrc<CR>
 set timeoutlen=1000 ttimeoutlen=0
 
 "Define a fish como el shell predeterminado
-set shell=/usr/local/bin/fish
+"set shell=fish
 
 "Permite pulsar "gf" en lineas tipo import X from 'FILE'
 let g:vim_npr_file_types = ["js", "jsx", "css", "coffee", "ts"]
@@ -146,7 +147,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'Shougo/context_filetype.vim'
 
   "Autocompleta pulsado tab
-  "Plug 'ervandew/supertab'
+  Plug 'ervandew/supertab'
 
   "Traduccion de textos
   Plug 'voldikss/vim-translator'
@@ -208,14 +209,13 @@ nnoremap <C-k> <c-u>
 map <leader>1 :set foldlevel=0<CR>
 map <leader>2 :set foldlevel=1<CR>
 map <leader>3 :set foldlevel=2<CR>
-map <leader>4 :set foldlevel=999<CR>
+map <leader>4 :set foldlevel=3<CR>
+map <leader>5 :set foldlevel=999<CR>
 
 "Alterna maximizado del panel
 let g:maximizer_set_default_mapping = 0
 map <leader>a :MaximizerToggle<CR>
 
-"Alterna booleanos
-nmap tt :Switch<CR>
 
 "Busqueda en el contenido de los archivos
 nnoremap <leader>f :Rg 
@@ -231,6 +231,8 @@ nmap <c-l> :GitGutterNextHunk<CR>
 "Permite hacer búsquedas rápidas
 map <silent> <leader>p :FZF<CR>
 map <silent> <leader>o :GitFiles?<CR>
+
+map <silent> <leader>P :FZF ~/proyectos/vimwiki<CR>
 
 "Simplifica el paso a modo comando
 nmap ; :
@@ -270,10 +272,11 @@ highlight Normal ctermbg=NONE guibg=NONE
 
 
 "Abreviaturas
-iab ipdb import ipdb; ipdb.set_trace()
-iab pudb import pudb; pudb.set_trace()
-iab debugger debugger; // eslint-disable-line
-iab html5 <!DOCTYPE html><CR> <html><CR> <head><CR> <script type="text/javascript" src=""></script><CR> <link rel="stylesheet" href=""><CR> </head><CR> <body><CR> </body><CR> </html><CR>
+iab __ipdb. import ipdb; ipdb.set_trace()
+iab __pdb. import pdb; pdb.set_trace()
+iab __html5 <!DOCTYPE html><CR> <html><CR> <head><CR> <script type="text/javascript" src=""></script><CR> <link rel="stylesheet" href=""><CR> </head><CR> <body><CR> </body><CR> </html><CR>
+iab __debugger from remote_pdb import RemotePdb; RemotePdb('127.0.0.1', 4444).set_trace()
+
 
 nmap <silent> gd :ALEGoToDefinition<CR>
 
@@ -384,6 +387,7 @@ map ttn vi":'<,'>TranslateR --target_lang=en<cr>
 map tte vi":'<,'>TranslateR --target_lang=es<cr>
 map ttp vi":'<,'>TranslateR --target_lang=pt<cr>
 
+map RR i```<ESC>
 
 map <leader>u :tabedit ~/tareas-para-hacer.md<cr>
 
@@ -432,6 +436,10 @@ let g:context_enabled = 0
 map <leader>ct :ContextToggle<cr>
 
 
+
+
+map <leader>m :0r!crear-entrada-en-worklog<cr><esc>
+
 map <leader>- o----- ✂ ----- ✂ ----- ✂ ----- ✂ -----<cr><esc>
 
 "Desactivo auto-completado automático
@@ -444,13 +452,13 @@ function! s:check_back_space() abort
 endfunction
 
 "Para insertar indentación o auto-completar cuando se pulsa la tecla tab.
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ asyncomplete#force_refresh()
+"inoremap <silent><expr> <TAB>
+"\ pumvisible() ? "\<C-n>" :
+"\ <SID>check_back_space() ? "\<TAB>" :
+"\ asyncomplete#force_refresh()
   
 "Para navegar con tab (o shift-tab) en el menú de auto-completado
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 let g:lsp_diagnostics_signs_error = {'text': '✗'}
 let g:lsp_diagnostics_signs_warning = {'text': '!'}
@@ -466,12 +474,30 @@ nmap <leader><enter> :LspDefinition<cr>
 set nohlsearch
 
 "ir al ticket de gira
-map gt :!open https://clicoh-soft.atlassian.net/browse/<c-r>=expand("<cword>")<CR><CR>
+map gt :!open https://mercadolibre.atlassian.net/browse/<c-r>=expand("<cword>")<CR><CR>
 
 autocmd FileType vimwiki setlocal textwidth=60
 
-map <leader>n :r!pegar-imagen<cr>
+map <leader>n :r!pegar-imagen %<cr>
 
 
 "Genera el indice de entradas del diario automáticamente.
 autocmd BufEnter diary.wiki :VimwikiDiaryGenerateLinks
+
+"Repite el comando anterior
+map rr :!!<CR>
+
+"Ejecuta la linea de código actual
+map <leader>r :exec '!'.getline('.')<CR>
+
+
+"Mostrar los trailing whitespaces
+"highlight ExtraWhitespace ctermbg=red guibg=red
+"match ExtraWhitespace /\s\+$/
+
+
+"hace el que clipboard sea compartido entre vim y el sistema.
+set clipboard=unnamed
+
+au BufNewFile,BufRead *.markdown set filetype=markdown
+set spelllang=es
