@@ -19,7 +19,7 @@ nombres = ["Lunes", "Martes", "Miércoles",
 
 
 nombre_del_dia = nombres[dia]
-nombre_del_mes = meses[mes]
+nombre_del_mes = meses[mes-1]
 
 
 print(f"""= {nombre_del_dia} {numero_de_dia} de {nombre_del_mes} de {año} =
