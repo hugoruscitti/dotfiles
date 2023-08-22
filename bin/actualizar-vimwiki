@@ -1,21 +1,29 @@
 #!/bin/bash
+
+function update {
+  gstatus=`git status --porcelain`
+
+  if [ ${#gstatus} -ne 0 ]
+  then
+   echo "hay cambios"
+   git add --all
+   echo "commit"
+   PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit -m "$gstatus"
+   echo "pull --rebase"
+   git pull --rebase
+   echo "push"
+   git push
+  fi
+
+  git pull
+}
+
 cd ~/proyectos/vimwiki
+update
 
-gstatus=`git status --porcelain`
+cd ~/proyectos/fsnotes
+update
 
 
-if [ ${#gstatus} -ne 0 ]
-then
- echo "hay cambios"
- git add --all
- echo "commit"
- PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit -m "$gstatus"
- echo "pull --rebase"
- git pull --rebase
- echo "push"
- git push
-fi
-
-git pull
 
 echo $(date) >> ~/log.txt
