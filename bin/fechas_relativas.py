@@ -3,7 +3,6 @@
 import sys
 import re
 import datetime
-from string import Formatter
 
 
 
